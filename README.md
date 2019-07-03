@@ -1,4 +1,4 @@
-# BeatifulSoap
+# BeautifulSoap
 Crawling using BS4
 
 Use URLlib and BS4 to scrap info from sample website.
