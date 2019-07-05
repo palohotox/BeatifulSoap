@@ -8,3 +8,4 @@ find_all()
 Use Inspect in Chrome to see the html code that represent data tha we are looking for
 
 Loop through elements in HTML and write to excel
+write information details to graphic.csv
