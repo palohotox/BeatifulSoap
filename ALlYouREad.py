@@ -1,4 +1,5 @@
 
+
 import bs4
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
@@ -11,7 +12,55 @@ def get_imd_item_info(item):
 
     return url
 
+def get_category(countryurl):
 
+    myurl1 = countryurl
+
+    uClient = uReq(myurl1)
+    pageHtml = uClient.read()
+    page_soup = soup(pageHtml, "html.parser")
+
+    caturl =
+
+    return caturl
+
+
+#Loop through Country
+myurl1= 'https://www.allyoucanread.com/'
+
+uClient= uReq(myurl1)
+pageHtml= uClient.read()
+page_soup=soup(pageHtml,"html.parser")
+
+conturlmain = page_soup.findAll('select',{"name":"az"})
+
+#conturlmain = conturlmain[0]
+#print(conturlmain[0])
+
+for conturlm in conturlmain:
+    conturlopt =  conturlm.findAll('option')
+
+    count = 0
+
+    for contopt in conturlopt:
+
+       if count > 5 :
+        print(contopt['value'])
+        #print(contopt)
+        countryurl=contopt['value']
+
+        #Call function for get_category
+        #get_category(countryurl)
+
+
+       count=count+1
+
+#SAMPLE FOR AFGHANISTAN
+#"https://www.allyoucanread.com/afghanistan-newspapers/"
+
+
+
+"""
 # Define Url to get the data from
 myurl= "https://www.allyoucanread.com/uk-car/"
 #Country, type, URL and Service name
@@ -43,7 +92,7 @@ for item in container:
 
     #loop through the result list and return the component
     for url in myurl:
-        
+
         print(url['href'])
 
     # Getting text out of anchor
@@ -53,5 +102,7 @@ for item in container:
     #price = item.find("div", {"class": "item-action"}).find("li", {"class": "price-current"}).text
 
     #print(myurl)
+
+"""
 
 
