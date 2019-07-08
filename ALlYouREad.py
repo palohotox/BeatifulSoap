@@ -1,5 +1,4 @@
 
-
 import bs4
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
@@ -12,17 +11,53 @@ def get_imd_item_info(item):
 
     return url
 
-def get_category(countryurl):
+def get_category(countryurl,country):
 
-    myurl1 = countryurl
+    cat = ['classifieds', 'car', 'job', 'realEstate']
+
+    for categ in cat:
+
+        # replace newspapers with categories 'https: // www.allyoucanread.com / afghanistan - newspapers /'
+        caturl= countryurl.rsplit('-', 1)[0] +'-'+ categ
+
+        #print(caturl)
+        get_info(caturl,country,categ)
+
+        break
+
+        #myurl1 = countryurl
+
+        #uClient = uReq(myurl1)
+        #pageHtml = uClient.read()
+        #page_soup = soup(pageHtml, "html.parser")
+
+
+    return caturl
+
+def get_info(infourl,country,categ):
+
+
+    myurl1 = infourl
 
     uClient = uReq(myurl1)
     pageHtml = uClient.read()
     page_soup = soup(pageHtml, "html.parser")
 
-    caturl =
+    # grab each products
+    container = page_soup.findAll("div", {"class": "wrapper clearfix"})
 
-    return caturl
+    # show the attribute
+    # print(item.find('a',{"class": "sublink"} ).attrs['href'])
+
+    # print(len(container))
+    for item in container:
+        myurl = item.findAll('a', {"class": "sublink"})  # ,limit=5
+
+        # loop through the result list and return the component
+        for url in myurl:
+            print(country,categ,url['href'])
+
+
 
 
 #Loop through Country
@@ -45,12 +80,12 @@ for conturlm in conturlmain:
     for contopt in conturlopt:
 
        if count > 5 :
-        print(contopt['value'])
+        #print(contopt['value'])
         #print(contopt)
         countryurl=contopt['value']
 
         #Call function for get_category
-        #get_category(countryurl)
+        get_category(countryurl,contopt.text)
 
 
        count=count+1
@@ -71,38 +106,5 @@ pageHtml= uClient.read()
 page_soup=soup(pageHtml,"html.parser")
 
 
-#grab each products
-container = page_soup.findAll("div",{"class":"wrapper clearfix"})
-
-#item = container[0]
-
-# show the attribute
-#print(item.find('a',{"class": "sublink"} ).attrs['href'])
-
-#print(len(container))
-for item in container:
-    # brandName include error handling
-    # brand = item.find("a", {"class": "item-brand"}).img["title"]
-    # print(brand)
-
-    #myurl= get_imd_item_info(item)
-    #url = item.find_all('a')
-
-    myurl = item.findAll('a', {"class": "sublink"}) #,limit=5
-
-    #loop through the result list and return the component
-    for url in myurl:
-
-        print(url['href'])
-
-    # Getting text out of anchor
-    #itemName = item.find("a", {"class": "item-title"}).text
-    # Get a Price
-
-    #price = item.find("div", {"class": "item-action"}).find("li", {"class": "price-current"}).text
-
-    #print(myurl)
 
 """
-
-
